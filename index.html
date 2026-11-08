@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dimir Barbosa – Currículo (SPA)</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.4.38/dist/vue.global.prod.js"></script>
+    <style>
+         :root {
+            --bg: #f4f6f9;
+            --card: #fff;
+            --text: #1d2733;
+            --muted: #5b6776;
+            --accent: #0b6e99;
+            --accent-d: #084e6c;
+            --line: #d9e0e8;
+        }
+        
+        @media (prefers-color-scheme:dark) {
+             :root {
+                --bg: #12181f;
+                --card: #1b242e;
+                --text: #e8edf2;
+                --muted: #9aa8b6;
+                --accent: #4cb8e6;
+                --accent-d: #2a8ab5;
+                --line: #2c3947;
+            }
+        }
+        
+        * {
+            box-sizing: border-box
+        }
+        
+        html,
+        body {
+            margin: 0;
+            min-height: 100%
+        }
+        
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.55;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh
+        }
+        
+        header {
+            background: var(--card);
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            z-index: 10
+        }
+        
+        .bar {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: .8rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap
+        }
+        
+        .brand {
+            color: var(--text);
+            text-decoration: none
+        }
+        
+        .brand strong {
+            display: block;
+            font-size: 1.15rem
+        }
+        
+        .brand span {
+            font-size: .85rem;
+            color: var(--muted)
+        }
+        
+        .burger {
+            display: none;
+            background: none;
+            border: 1px solid var(--line);
+            color: var(--text);
+            border-radius: 6px;
+            font-size: 1.3rem;
+            padding: .2rem .6rem;
+            cursor: pointer
+        }
+        
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: .4rem
+        }
+        
+        nav a {
+            display: block;
+            padding: .45rem .9rem;
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500
+        }
+        
+        nav a:hover {
+            background: var(--bg)
+        }
+        
+        nav a[aria-current="page"] {
+            background: var(--accent);
+            color: #fff
+        }
+        
+        a:focus-visible,
+        button:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 2px
+        }
+        
+        main {
+            flex: 1;
+            width: 100%;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 1.5rem 1.2rem 2rem
+        }
+        
+        h2 {
+            margin-top: 0;
+            outline: none;
+            border-left: 5px solid var(--accent);
+            padding-left: .7rem
+        }
+        
+        h3 {
+            color: var(--accent);
+            margin: 1.6rem 0 .6rem
+        }
+        
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 1.1rem 1.3rem
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1rem
+        }
+        
+        .facts dt {
+            font-size: .75rem;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: .6rem
+        }
+        
+        .facts dd {
+            margin: 0;
+            font-weight: 600
+        }
+        
+        .timeline {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border-left: 3px solid var(--line)
+        }
+        
+        .timeline li {
+            position: relative;
+            padding: 0 0 1.1rem 1.2rem
+        }
+        
+        .timeline li::before {
+            content: "";
+            position: absolute;
+            left: -8px;
+            top: .4rem;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: var(--accent)
+        }
+        
+        .timeline .when {
+            font-size: .8rem;
+            color: var(--muted)
+        }
+        
+        .timeline .role {
+            font-weight: 700
+        }
+        
+        .timeline ul {
+            margin: .3rem 0 0;
+            padding-left: 1.1rem
+        }
+        
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem
+        }
+        
+        .tag {
+            display: inline-block;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: .15rem .7rem;
+            margin: .2rem .2rem 0 0;
+            font-size: .85rem
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem
+        }
+        
+        .hcard {
+            text-align: left;
+            font: inherit;
+            color: inherit;
+            cursor: pointer;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 1.2rem
+        }
+        
+        .hcard:hover {
+            border-color: var(--accent)
+        }
+        
+        .hcard .ic {
+            font-size: 2rem
+        }
+        
+        .hcard strong {
+            display: block;
+            margin: .3rem 0
+        }
+        
+        .hcard small {
+            color: var(--accent);
+            font-weight: 600
+        }
+        
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 50
+        }
+        
+        .modal {
+            background: var(--card);
+            border-radius: 12px;
+            max-width: 460px;
+            width: 100%;
+            padding: 1.5rem;
+            position: relative
+        }
+        
+        .modal .x {
+            position: absolute;
+            top: .6rem;
+            right: .6rem;
+            background: none;
+            border: 0;
+            font-size: 1.5rem;
+            color: var(--text);
+            cursor: pointer
+        }
+        
+        .btn {
+            background: var(--accent);
+            color: #fff;
+            border: 0;
+            border-radius: 6px;
+            padding: .5rem 1.1rem;
+            font: inherit;
+            cursor: pointer;
+            margin-top: .8rem
+        }
+        
+        footer {
+            background: var(--card);
+            border-top: 1px solid var(--line);
+            padding: 1rem 1.2rem;
+            text-align: center
+        }
+        
+        footer ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 .4rem;
+            display: flex;
+            justify-content: center;
+            gap: .8rem
+        }
+        
+        footer a {
+            display: inline-flex;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #fff;
+            align-items: center;
+            justify-content: center
+        }
+        
+        footer a:hover {
+            background: var(--accent-d)
+        }
+        
+        footer svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor
+        }
+        
+        footer small {
+            color: var(--muted)
+        }
+        
+        .fade-enter-active {
+            transition: opacity .25s
+        }
+        
+        .fade-enter-from {
+            opacity: 0
+        }
+        
+        @media (prefers-reduced-motion:reduce) {
+            .fade-enter-active {
+                transition: none
+            }
+        }
+        
+        @media (max-width:720px) {
+            .grid,
+            .cards {
+                grid-template-columns: 1fr
+            }
+            .burger {
+                display: block
+            }
+            nav {
+                width: 100%;
+                display: none
+            }
+            nav.open {
+                display: block
+            }
+            nav ul {
+                flex-direction: column
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <div class="bar">
+                <a class="brand" href="#/quem-sou-eu">
+                    <strong>{{ cv.name }}</strong><span>{{ cv.role }}</span>
+                </a>
+                <button class="burger" @click="menuOpen = !menuOpen" :aria-expanded="menuOpen" aria-controls="menu" aria-label="Abrir ou fechar o menu">☰</button>
+                <nav id="menu" :class="{open: menuOpen}" aria-label="Principal">
+                    <ul>
+                        <li v-for="v in views" :key="v.id">
+                            <a :href="'#/' + v.id" :aria-current="current === v.id ? 'page' : null">{{ v.label }}</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <transition name="fade" mode="out-in">
+                <section :key="current">
+
+                    <!-- VISTA 1 -->
+                    <template v-if="current === 'quem-sou-eu'">
+          <h2 ref="title" tabindex="-1">Quem Sou Eu?</h2>
+          <div class="grid">
+            <div class="card">
+              <p>{{ cv.summary }}</p>
+              <h3>Formação académica</h3>
+              <ul class="timeline">
+                <li v-for="e in cv.education" :key="e.course">
+                  <div class="when">{{ e.when }}</div>
+                  <div class="role">{{ e.course }}</div>
+                  <div>{{ e.school }}</div>
+                </li>
+              </ul>
+            </div>
+            <aside class="card">
+              <dl class="facts">
+                <template v-for="f in cv.facts" :key="f.k">
+                  <dt>{{ f.k }}</dt><dd>{{ f.v }}</dd>
+                </template>
+                    </dl>
+                    </aside>
+    </div>
+    </template>
+
+    <!-- VISTA 2 -->
+    <template v-else-if="current === 'o-que-faco'">
+          <h2 ref="title" tabindex="-1">O que faço?</h2>
+          <h3>Experiência profissional</h3>
+          <div class="card">
+            <ul class="timeline">
+              <li v-for="j in cv.jobs" :key="j.role + j.when">
+                <div class="when">{{ j.when }}</div>
+                <div class="role">{{ j.role }}</div>
+                <div>{{ j.company }}</div>
+                <ul><li v-for="t in j.tasks" :key="t" style="padding:0;border:0">{{ t }}</li></ul>
+              </li>
+            </ul>
+          </div>
+          <h3>Competências técnicas</h3>
+          <div class="skills">
+            <div class="card" v-for="g in cv.skills" :key="g.group">
+              <strong>{{ g.group }}</strong><br>
+              <span class="tag" v-for="s in g.items" :key="s">{{ s }}</span>
+            </div>
+          </div>
+          <h3>Certificações</h3>
+          <div class="card">
+            <ul><li v-for="c in cv.certs" :key="c">{{ c }}</li></ul>
+          </div>
+        </template>
+
+    <!-- VISTA 3 -->
+    <template v-else>
+          <h2 ref="title" tabindex="-1">Hobbies</h2>
+          <p>Selecione um cartão para ver mais detalhes.</p>
+          <div class="cards">
+            <button class="hcard" v-for="h in cv.hobbies" :key="h.title" @click="openModal(h, $event)">
+              <span class="ic" aria-hidden="true">{{ h.icon }}</span>
+              <strong>{{ h.title }}</strong>
+              <span>{{ h.short }}</span><br>
+              <small>Saber mais →</small>
+            </button>
+          </div>
+        </template>
+
+    </section>
+    </transition>
+    </main>
+
+    <!-- MODAL ÚNICO E REUTILIZÁVEL -->
+    <div class="overlay" v-if="modalItem" @click.self="closeModal" @keydown.esc="closeModal">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mtitle" ref="modal">
+            <button class="x" ref="closeBtn" @click="closeModal" aria-label="Fechar">×</button>
+            <div style="font-size:2rem" aria-hidden="true">{{ modalItem.icon }}</div>
+            <h2 id="mtitle" style="border:0;padding:0">{{ modalItem.title }}</h2>
+            <p>{{ modalItem.long }}</p>
+            <a v-if="modalItem.link" class="btn" :href="modalItem.link" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none;margin-right:.5rem">{{ modalItem.linkLabel || 'Abrir ligação' }} ↗</a>
+            <button class="btn" @click="closeModal">Fechar</button>
+        </div>
+    </div>
+
+    <footer>
+        <ul aria-label="Redes sociais">
+            <li v-for="s in cv.social" :key="s.name">
+                <a :href="s.url" :aria-label="s.name" :target="s.url.startsWith('http') ? '_blank' : null" rel="noopener">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path :d="s.path"/></svg>
+                </a>
+            </li>
+        </ul>
+        <small>© 2026 {{ cv.name }} · Miniprojeto 1 – Programação Web Avançada</small>
+    </footer>
+    </div>
+
+    <script>
+        const {
+            createApp,
+            ref,
+            reactive,
+            computed,
+            onMounted,
+            onBeforeUnmount,
+            nextTick,
+            watch
+        } = Vue;
+
+        /* ===== DADOS (edite aqui) ===== */
+        const cv = {
+            name: "Dimir Barbosa",
+            role: "Full Stack Developer",
+            summary: "Engenheiro Informático licenciado pelo UPCB, com formação CCNA (Cisco Networking Academy) e experiência prática em administração de redes, suporte técnico de nível 1 e 2 e resolução de incidentes em infraestruturas Cisco. Perfil analítico, orientado ao troubleshooting e à disponibilidade dos serviços, com conhecimentos de cibersegurança e bases de programação (Python, C#). Mestrado em Engenharia Informática e Tecnologia Web em curso.",
+            facts: [{
+                k: "Localização",
+                v: "Sintra, Portugal"
+            }, {
+                k: "Idiomas",
+                v: "Português (nativo) · Inglês (intermédio)"
+            }, {
+                k: "Foco",
+                v: "Redes · Suporte N1/N2 · Segurança"
+            }, {
+                k: "Contacto",
+                v: "dimirbarbosa77@gmail.com"
+            }],
+            education: [{
+                when: "Desde setembro de 2026",
+                course: "Mestrado em Engenharia Informática e Tecnologia Web",
+                school: "UTAD (em colaboração com a UAb)"
+            }, {
+                when: "Concluída em 2025",
+                course: "Licenciatura em Engenharia Informática",
+                school: "Universidade Politécnico de Castelo Branco (UPCB)"
+            }],
+            jobs: [{
+                when: "Janeiro de 2026 – Presente",
+                role: "Full Stack Developer",
+                company: "Datapoint Software · Praia da Vitória, Açores",
+                tasks: ["Desenvolvimento e manutenção de aplicações web (.NET, Django, Angular).", "Gestão de bases de dados SQL Server e PostgreSQL, em ciclos Ágeis com GitLab."]
+            }, {
+                when: "Verão de 2024",
+                role: "Estagiário de Desenvolvimento (DevSecOps)",
+                company: "Babel · Castelo Branco",
+                tasks: ["Análise de vulnerabilidades e protocolos de segurança em camadas para proteção de dados sensíveis."]
+            }, {
+                when: "2017 – 2019",
+                role: "Técnico de Sistemas e Redes",
+                company: "Cyber SIG · Bissau",
+                tasks: ["Configuração e administração de redes Cisco (VLANs e routing), com alta disponibilidade.", "Suporte técnico N1 e N2: diagnóstico e resolução de incidentes.", "Manutenção preventiva e corretiva de infraestruturas e parques tecnológicos."]
+            }],
+            skills: [{
+                group: "Redes",
+                items: ["CCNA", "VLAN", "Routing", "Switching", "IPv4/IPv6", "Cisco IOS", "Wireless"]
+            }, {
+                group: "Operações / Suporte",
+                items: ["Troubleshooting", "Gestão de incidentes", "Suporte N1/N2", "Manutenção"]
+            }, {
+                group: "Segurança",
+                items: ["Ethical Hacking", "Cibersegurança", "Análise de vulnerabilidades", "DevSecOps"]
+            }, {
+                group: "Sistemas e Ferramentas",
+                items: ["SQL Server", "PostgreSQL", "Git", "GitLab", "Agile/Scrum"]
+            }, {
+                group: "Programação",
+                items: ["Python", "C#", ".NET Core", "Django", "Angular"]
+            }],
+            certs: [
+                "CCNA v7 (ITN & SRWE) — Cisco Networking Academy",
+                "Networking Basics — Cisco Networking Academy (2026)",
+                "Ethical Hacker — Cisco Networking Academy (2026)",
+                "Introduction to Cybersecurity — Cisco Networking Academy (2026)"
+            ],
+            /* EXEMPLOS: substitua pelos seus hobbies reais */
+            hobbies: [{
+                icon: "🖧",
+                title: "Redes e home lab",
+                short: "Montar e testar topologias",
+                long: "[Exemplo – edite] Gosto de montar pequenos laboratórios de redes e testar configurações Cisco no Packet Tracer."
+            }, {
+                icon: "🛡️",
+                title: "Cibersegurança",
+                short: "Desafios e práticas de segurança",
+                long: "[Exemplo – edite] Resolver desafios de segurança e estudar técnicas de ethical hacking."
+            }, {
+                icon: "🎵",
+                title: "Música",
+                short: "Ouvir e descobrir artistas",
+                long: "[Exemplo – edite] Descreva aqui o seu hobby.",
+                link: "COLE-AQUI-O-LINK-DO-SPOTIFY",
+                linkLabel: "Ouvir no Spotify"
+            }],
+            social: [{
+                name: "GitHub",
+                url: "https://github.com/dimirbarbosa",
+                path: "M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"
+            }, {
+                name: "LinkedIn",
+                url: "https://www.linkedin.com/in/dimir-biague-barbosa-627a51180/",
+                path: "M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4V21H3zM9.5 9.75h3.8v1.6h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-4.9c0-1.17-.02-2.67-1.63-2.67-1.63 0-1.88 1.27-1.88 2.58V21h-4z"
+            }, {
+                name: "E-mail",
+                url: "mailto:dimirbarbosa77@gmail.com",
+                path: "M2 5h20v14H2zm2 2v.5l8 5 8-5V7zm16 3-8 5-8-5v7h16z"
+            }]
+        };
+        const views = [{
+            id: "quem-sou-eu",
+            label: "Quem Sou Eu?"
+        }, {
+            id: "o-que-faco",
+            label: "O que faço?"
+        }, {
+            id: "hobbies",
+            label: "Hobbies"
+        }];
+
+        createApp({
+            setup() {
+                const current = ref("quem-sou-eu");
+                const menuOpen = ref(false);
+                const modalItem = ref(null);
+                const title = ref(null);
+                const closeBtn = ref(null);
+                let lastFocus = null;
+
+                function readHash() {
+                    const id = location.hash.replace(/^#\/?/, "");
+                    current.value = views.some(v => v.id === id) ? id : "quem-sou-eu";
+                    menuOpen.value = false;
+                    modalItem.value = null;
+                }
+
+                function openModal(item, ev) {
+                    lastFocus = ev.currentTarget;
+                    modalItem.value = item;
+                    document.body.style.overflow = "hidden";
+                    nextTick(() => closeBtn.value && closeBtn.value.focus());
+                }
+
+                function closeModal() {
+                    modalItem.value = null;
+                    document.body.style.overflow = "";
+                    if (lastFocus) lastFocus.focus();
+                }
+
+                function onKey(e) {
+                    if (e.key === "Escape" && modalItem.value) closeModal();
+                }
+
+                watch(current, () => nextTick(() => title.value && title.value.focus({
+                    preventScroll: true
+                })));
+
+                onMounted(() => {
+                    readHash();
+                    window.addEventListener("hashchange", readHash);
+                    window.addEventListener("keydown", onKey);
+                });
+                onBeforeUnmount(() => {
+                    window.removeEventListener("hashchange", readHash);
+                    window.removeEventListener("keydown", onKey);
+                });
+
+                return {
+                    cv,
+                    views,
+                    current,
+                    menuOpen,
+                    modalItem,
+                    title,
+                    closeBtn,
+                    openModal,
+                    closeModal
+                };
+            }
+        }).mount("#app");
+    </script>
+</body>
+
+</html>
+
+</html>
